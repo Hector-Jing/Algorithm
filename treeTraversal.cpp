@@ -160,6 +160,19 @@ void levelOrder(TreeNode* root, vector<int>& result){ //BFS
     }
 }
 
+void DFS(TreeNode* root, vector<int>& result){
+    if(!root) return;
+    stack<TreeNode*> nodeStack;
+    nodeStack.push(root);
+    while(!nodeStack.empty()){
+        TreeNode *node = nodeStack.top();
+        nodeStack.pop();
+        result.push_back(node->val);
+        if(node->right) nodeStack.push(node->right);
+        if(node->left) nodeStack.push(node->left);
+    }
+}
+
 void traversal(vector<int> list){
     int len = list.size();
     for(int i=0;i<len;i++){
@@ -177,7 +190,9 @@ int main(){
     vector<int> preResult;
     vector<int> inResult;
     vector<int> postResult;
-    vector<int> levelResult;
+    vector<int> levelResult; //bfsResult
+    vector<int> dfsResult;
+
     cout << "The result of the preorder traversal is:" << endl;
     // preOrderRecursive(root, preResult);
     preOrder(root, preResult); 
@@ -190,10 +205,12 @@ int main(){
     // postOrderRecursive(root, postResult);
     postOrder(root, postResult);
     traversal(postResult); 
-
     cout << "The result of the levelorder traversal is:" << endl;
     levelOrder(root, levelResult);
     traversal(levelResult);
+    cout << "The result of the DFS traversal is:" << endl;
+    DFS(root, dfsResult);
+    traversal(dfsResult);
 
     return 0;
 }
